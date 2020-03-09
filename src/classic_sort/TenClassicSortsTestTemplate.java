@@ -1,13 +1,16 @@
-package sort;
+package classic_sort;
 
 import java.util.Arrays;
 
-public class TenClassicSorts {
+public class TenClassicSortsTestTemplate {
     public int[] bubbleSort(int[] srcArr) {
+        if (srcArr == null || srcArr.length == 0) {
+            return srcArr;
+        }
         int[] arr = Arrays.copyOf(srcArr, srcArr.length);
         int tmp;
         boolean hasChanged;
-        for (int i = arr.length - 1; i > 0; i--) { // error 1
+        for (int i = arr.length - 1; i > 0; i--) {
             hasChanged = false;
             for (int j = 0; j < i; j++) {
                 if (arr[j] > arr[j + 1]) {
@@ -25,7 +28,7 @@ public class TenClassicSorts {
     }
 
     public int[] selectionSort(int[] srcArr) {
-        if (srcArr.length == 0) {
+        if (srcArr == null || srcArr.length == 0) {
             return srcArr;
         }
         int[] arr = Arrays.copyOf(srcArr, srcArr.length);
@@ -47,11 +50,14 @@ public class TenClassicSorts {
     }
 
     public int[] insertSort(int[] srcArr) {
+        if (srcArr == null || srcArr.length == 0) {
+            return srcArr;
+        }
         int[] arr = Arrays.copyOf(srcArr, srcArr.length);
         int tmp, j;
-        for (int i = 1; i < arr.length; i++) { // error 1
-            j = i;
+        for (int i = 1; i < arr.length; i++) {
             tmp = arr[i];
+            j = i;
             while (j > 0 && tmp < arr[j - 1]) {
                 arr[j] = arr[j - 1];
                 j--;
@@ -62,6 +68,9 @@ public class TenClassicSorts {
     }
 
     public int[] shellSort(int[] srcArr) {
+        if (srcArr == null || srcArr.length == 0) {
+            return srcArr;
+        }
         int[] arr = Arrays.copyOf(srcArr, srcArr.length);
         int gap = 1;
         while (gap < arr.length) {
@@ -69,12 +78,12 @@ public class TenClassicSorts {
         }
         int tmp, j;
         while (gap > 0) {
-            for (int i = gap; i < arr.length; i+=gap) {
-                j = i;
+            for (int i = gap; i < arr.length; i++) {
                 tmp = arr[i];
+                j = i;
                 while (j >= gap && tmp < arr[j - gap]) {
                     arr[j] = arr[j - gap];
-                    j-=gap;
+                    j -= gap;
                 }
                 arr[j] = tmp;
             }
@@ -84,36 +93,11 @@ public class TenClassicSorts {
     }
 
     public int[] quickSort(int[] srcArr) {
-        if (srcArr == null || srcArr.length == 0 || srcArr.length == 1) {
+        if (srcArr == null || srcArr.length == 0) {
             return srcArr;
         }
         int[] arr = Arrays.copyOf(srcArr, srcArr.length);
-        return quick2(arr, 0, arr.length - 1);
-    }
-
-    private int[] quick2(int[] arr, int start, int end) {
-        if (start < end) {
-            int left = start, right = end, pivotValue = arr[start], i = start, tmp;
-            while (i <= end && left < right) {
-                if (arr[i] < pivotValue) {
-                    tmp = arr[left];
-                    arr[left] = arr[i];
-                    arr[i] = tmp;
-                    i ++;
-                    left ++;
-                } else if (arr[i] > pivotValue) {
-                    tmp = arr[right];
-                    arr[right] = arr[i];
-                    arr[i] = tmp;
-                    right --;
-                } else {
-                    i++;
-                }
-            }
-            quick2(arr, start, left - 1);
-            quick2(arr, right + 1, end);
-        }
-        return arr;
+        return quick(arr, 0, arr.length - 1);
     }
 
     private int[] quick(int[] arr, int start, int end) {
@@ -131,7 +115,7 @@ public class TenClassicSorts {
         int pivotValue = arr[start];
         int tmp;
         for (int i = mark + 1; i <= end; i++) {
-            if (arr[i] < pivotValue) { // error 1
+            if (arr[i] < pivotValue) {
                 mark ++;
                 if (mark != i) {
                     tmp = arr[mark];
@@ -148,13 +132,13 @@ public class TenClassicSorts {
     }
 
     private int partitionD(int[] arr, int start, int end) {
-        int left = start, right = end, pivotValue = arr[start], tmp;
+        int tmp, left = start, right = end, pivotValue = arr[start];
         while (left < right) {
             while (left < right && arr[right] >= pivotValue) {
-                right --;
+                right--;
             }
             while (left < right && arr[left] <= pivotValue) {
-                left ++;
+                left++;
             }
             if (left < right) {
                 tmp = arr[left];
@@ -168,13 +152,13 @@ public class TenClassicSorts {
     }
 
     public int[] mergeSort(int[] srcArr) {
-        if (srcArr.length < 2) {
+        if (srcArr == null || srcArr.length == 0 || srcArr.length == 1) {
             return srcArr;
         }
         int[] arr = Arrays.copyOf(srcArr, srcArr.length);
-        int mid = (int) Math.floor(arr.length / 2);
-        int[] left = Arrays.copyOfRange(arr, 0, mid);
-        int[] right = Arrays.copyOfRange(arr, mid, arr.length);
+        int middle = (int) Math.floor(arr.length / 2);
+        int[] left = Arrays.copyOfRange(arr, 0, middle);
+        int[] right = Arrays.copyOfRange(arr, middle, arr.length);
         return merge(mergeSort(left), mergeSort(right));
     }
 
@@ -198,17 +182,20 @@ public class TenClassicSorts {
     }
 
     public int[] heapSort(int[] srcArr) {
+        if (srcArr == null || srcArr.length == 0) {
+            return srcArr;
+        }
         int[] arr = Arrays.copyOf(srcArr, srcArr.length);
         for (int i = (int) Math.floor(arr.length / 2); i >= 0; i--) {
             heapify(arr, i, arr.length);
         }
-        int tmp;
         int length = arr.length;
+        int tmp;
         while (length > 0) {
             tmp = arr[0];
             arr[0] = arr[length - 1];
             arr[length - 1] = tmp;
-            length --;
+            length--;
             heapify(arr, 0, length);
         }
         return arr;
@@ -218,7 +205,6 @@ public class TenClassicSorts {
         int leftChild = index * 2 + 1;
         int rightChild = index * 2 + 2;
         int present = index;
-        int tmp;
         if (leftChild < length && arr[leftChild] > arr[present]) {
             present = leftChild;
         }
@@ -226,7 +212,7 @@ public class TenClassicSorts {
             present = rightChild;
         }
         if (present != index) {
-            tmp = arr[present];
+            int tmp = arr[present];
             arr[present] = arr[index];
             arr[index] = tmp;
             heapify(arr, present, length);
@@ -234,7 +220,7 @@ public class TenClassicSorts {
     }
 
     public int[] countSort(int[] srcArr) {
-        if (srcArr.length == 0) {
+        if (srcArr == null || srcArr.length == 0) {
             return srcArr;
         }
         int[] arr = Arrays.copyOf(srcArr, srcArr.length);
@@ -249,24 +235,25 @@ public class TenClassicSorts {
         }
         int[] bucket = new int[max - min + 1];
         for (int value : arr) {
-            bucket[value - min]++;
+            bucket[value - min] ++;
         }
         int sortedIndex = 0;
         for (int i = 0; i < bucket.length; i++) {
             while (bucket[i] > 0) {
                 arr[sortedIndex++] = i + min;
-                bucket[i]--; // error 1
+                bucket[i]--;
             }
         }
         return arr;
     }
 
     public int[] bucketSort(int[] srcArr) {
-        if (srcArr.length == 0) {
+        if (srcArr == null || srcArr.length == 0) {
             return srcArr;
         }
         int[] arr = Arrays.copyOf(srcArr, srcArr.length);
-        int max = arr[0], min = arr[0], bucketSize = 5;
+        int bucketSize = 5;
+        int max = arr[0], min = arr[0];
         for (int value : arr) {
             if (value > max) {
                 max = value;
@@ -278,9 +265,9 @@ public class TenClassicSorts {
         int bucketCount = (int) Math.floor((max - min) / bucketSize) + 1;
         int[][] buckets = new int[bucketCount][0];
         for (int value : arr) {
-            int index = (int) Math.floor((value - min) / bucketSize); //  error 1
+            int index = (int) Math.floor(value - min) / bucketSize;
             buckets[index] = Arrays.copyOf(buckets[index], buckets[index].length + 1);
-            int i = buckets[index].length - 1; // error 1
+            int i = buckets[index].length - 1;
             while (i > 0 && value < buckets[index][i - 1]) {
                 buckets[index][i] = buckets[index][i - 1];
                 i--;
@@ -289,9 +276,6 @@ public class TenClassicSorts {
         }
         int sortedIndex = 0;
         for (int[] bucket : buckets) {
-            if (bucket.length == 0) {
-                continue;
-            }
             for (int value : bucket) {
                 arr[sortedIndex++] = value;
             }
@@ -300,7 +284,7 @@ public class TenClassicSorts {
     }
 
     public int[] radixSort(int[] srcArr) {
-        if (srcArr.length == 0) {
+        if (srcArr == null || srcArr.length == 0) {
             return srcArr;
         }
         int[] arr = Arrays.copyOf(srcArr, srcArr.length);
@@ -310,23 +294,23 @@ public class TenClassicSorts {
                 max = Math.abs(value);
             }
         }
-        int maxNumLen = 0;
+        int numLen = 0;
         do {
-            max = max / 10;
-            maxNumLen ++;
+            numLen ++;
+            max /= 10;
         } while (max > 0);
-        int mod = 10, dev = 1;
-        for (int i = 0; i < maxNumLen; i++, dev *= 10) {
+        int dev = 1, mod = 10;
+        for (int i = 0; i < numLen; i++, dev *= 10) {
             int[][] buckets = new int[20][0];
             for (int value : arr) {
-                int index = value / dev % mod + 10; // error 1
+                int index = value / dev % mod + 10;
                 buckets[index] = Arrays.copyOf(buckets[index], buckets[index].length + 1);
                 buckets[index][buckets[index].length - 1] = value;
             }
             int pos = 0;
             for (int[] bucket : buckets) {
                 for (int value : bucket) {
-                    arr[pos++] = value;
+                    arr[pos ++] = value;
                 }
             }
         }

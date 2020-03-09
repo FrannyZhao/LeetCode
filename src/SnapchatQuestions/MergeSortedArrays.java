@@ -1,5 +1,7 @@
 package SnapchatQuestions;
 
+import java.util.Arrays;
+
 public class MergeSortedArrays {
 
     public void merge(int[] nums1, int m, int[] nums2, int n) {
@@ -17,13 +19,41 @@ public class MergeSortedArrays {
             }
             finalIndex--;
         }
-        printArray(nums1);
     }
 
-    private void printArray(int[] arr) {
-        for (int i = 0; i < arr.length; i ++) {
-            System.out.print(arr[i]);
+    public void merge2(int[] A, int m, int[] B, int n) {
+        int length = m + n - 1;
+        while (m > 0 && n > 0) {
+            if (A[m - 1] > B[n - 1]) {
+                A[length] = A[m - 1];
+                m--;
+            } else {
+                A[length] = B[n - 1];
+                n--;
+            }
+            length--;
         }
-        System.out.println("\n");
+        while (m > 0) {
+            A[length] = A[m - 1];
+            m--;
+            length--;
+        }
+        while (n > 0) {
+            A[length] = B[n - 1];
+            n--;
+            length--;
+        }
+    }
+
+    public static void main(String[] args) {
+        MergeSortedArrays mergeSortedArrays = new MergeSortedArrays();
+        int[] A = new int[]{1,2,3,0,0,0};
+        int m = 3;
+        int[] B = new int[]{2,5,6};
+        int n = 3;
+        mergeSortedArrays.merge2(A, m, B, n);
+        System.out.println(Arrays.toString(A));
+        int [] result = new int[]{1,2,2,3,5,6};
+        assert Arrays.equals(A, result);
     }
 }

@@ -1,10 +1,8 @@
 package FaceBookQuestions;
 
-import java.util.Arrays;
-
 public class TestSolutions {
 //    private static TwoSum solution = new TwoSum();
-    private static NumberOfIslands solution = new NumberOfIslands();
+    private static LC200NumberOfIslands solution = new LC200NumberOfIslands();
 
     public static void main(String[] args) {
 //        System.out.println();

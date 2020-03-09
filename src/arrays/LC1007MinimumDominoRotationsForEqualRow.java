@@ -67,6 +67,9 @@ public class LC1007MinimumDominoRotationsForEqualRow {
             minCount = Math.min(countA, countB);
         }
         System.out.println("count 1 " + minCount);
+        if (A[0] == B[0]) {
+            return minCount;
+        }
         check = B[0];
         countA = 0;
         countB = 0;

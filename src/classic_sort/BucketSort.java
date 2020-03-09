@@ -1,6 +1,5 @@
-package sort;
+package classic_sort;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BucketSort {

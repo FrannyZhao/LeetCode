@@ -21,7 +21,7 @@ Input:
 Output: 3
  */
 
-public class NumberOfIslands {
+public class LC200NumberOfIslands {
     public int numIslands(char[][] grid) {
         int num = 0;
         if (grid != null && grid.length != 0) {

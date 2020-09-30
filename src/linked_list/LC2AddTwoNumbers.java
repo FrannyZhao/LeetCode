@@ -1,5 +1,8 @@
 package linked_list;
 
+import utils.LinkedListHelper;
+import utils.ListNode;
+
 public class LC2AddTwoNumbers {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         if (l1 == null && l2 == null) {
@@ -57,7 +60,7 @@ public class LC2AddTwoNumbers {
 
     public static void main(String[] args) {
         LC2AddTwoNumbers test = new LC2AddTwoNumbers();
-        ListHelper helper = new ListHelper();
+        LinkedListHelper helper = new LinkedListHelper();
         String result;
 
         result = helper.toString(test.addTwoNumbers(helper.toList("[2,4,3]"), helper.toList("[5,6,4]")));

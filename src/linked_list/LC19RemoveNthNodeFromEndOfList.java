@@ -1,5 +1,8 @@
 package linked_list;
 
+import utils.LinkedListHelper;
+import utils.ListNode;
+
 public class LC19RemoveNthNodeFromEndOfList {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode pointer1 = head;
@@ -43,7 +46,7 @@ public class LC19RemoveNthNodeFromEndOfList {
 
     public static void main(String[] args) {
         LC19RemoveNthNodeFromEndOfList test = new LC19RemoveNthNodeFromEndOfList();
-        ListHelper helper = new ListHelper();
+        LinkedListHelper helper = new LinkedListHelper();
         String result;
 
         result = helper.toString(test.removeNthFromEnd2(helper.toList("[1,2,3,4,5]"), 2));

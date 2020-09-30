@@ -1,0 +1,47 @@
+@startuml
+Class01 <|-- Class02 : inherit
+Class03 *-- Class04 : composition
+Class05 o-- Class06 : aggregation
+Class07 --> Class08 : relation
+Class09 "comment1" ..> "comment2" Class10 : dependency
+
+abstract class AbstractList
+interface List
+annotation SuppressWarnings
+enum TimeUnit {
+    DAYS
+    HOURS
+    MINUTES
+}
+class Dummy3 <<Serializable>> {
+    String name
+}
+class Foo<? extends Element> {
+    int size()
+}
+package franny.test.plantuml #DDDDDD {
+    class China {
+        -String area /'-表示权限private'/
+            #int rivers // comment  /'#表示权限protected'/
+            {static}+long person /'+表示权限public'/
+            class Beijing{}
+            interface aa{}
+
+            ~{abstract}String getArea() /'~表示权限package private'/
+            long getPerson()
+    }
+}
+note bottom of China : note of Class China
+
+(Dummy3, Foo) ..> China
+
+note "This is a floating note" as N1
+
+class Object << general >>
+Object <|--- ArrayList
+
+note "This note is connected\nto several objects." as N2
+Object .. N2
+N2 .. ArrayList
+
+@enduml

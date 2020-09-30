@@ -1,14 +1,97 @@
 @startuml
-
-Class China {
-    -String area /'-表示权限private'/
-        #int rivers  /'#表示权限protected'/
-        +long person /'+表示权限public'/
-        class Beijing{}
-        interface aa{}
-
-        ~String getArea() /'~表示权限package private'/
-        long getPerson()
+/' --- 工厂模式 --- '/
+package com.design.factory.creator #e5ffe5 {
+    class Creator
+    class ConcreteCreatorA
+    class ConcreteCreatorB
 }
+package com.design.factory.product #ffebe5 {
+    class Product
+    class ConcreteProductA
+    class ConcreteProductB
+}
+class Creator {
+    +Product createProduct()
+}
+class ConcreteCreatorA {
+    +ConcreteProductA createProduct()
+}
+class ConcreteCreatorB {
+    +ConcreteProductB createProduct()
+}
+Creator <|-- ConcreteCreatorA
+Creator <|-- ConcreteCreatorB
+
+class Product{}
+class ConcreteProductA{}
+class ConcreteProductB{}
+
+Product <|-- ConcreteProductA
+Product <|-- ConcreteProductB
+
+ConcreteProductA <.. ConcreteCreatorA
+ConcreteProductB <.. ConcreteCreatorB
+
+/' --- 抽象工厂模式 --- '/
+package com.design.absfactory.factory #e5ffe5 {
+    class AbstractFactory
+    class ConcreteFactory
+}
+package com.design.absFactory.product #ffebe5 {
+    class AbstractProduct
+    class ConcreteProduct
+}
+class Client {}
+class AbstractFactory {
+    +AbstractProduct createProduct()
+}
+class ConcreteFactory {
+    +ConcreteProduct createProduct()
+}
+ConcreteFactory --|> AbstractFactory
+class AbstractProduct {}
+class ConcreteProduct {}
+ConcreteProduct --|> AbstractProduct
+ConcreteFactory ..> ConcreteProduct
+Client --> AbstractFactory
+Client --> AbstractProduct
+
+/' --- 工厂模式实践 --- '/
+class AllAppsPresenter <<Client>> {
+    -AllAppsFactory factory
+    -List<AppInfo> appInfoData
+    -AppStateListener listener
+}
+interface AllAppsInterface{
+    void register()
+    void unregister()
+    List<AppInfo> getAllApps()
+    AppInfo getAppInfoByPackageName(String packageName)
+}
+interface AppStateListener {
+    void onAdded(String packageName)
+    void onRemoved(String packageName)
+    void onChanged(String packageName)
+}
+class AllAppsFactory{
+    #AppStateListener listener
+}
+class IceCreamAllAppsFactory {
+    -void registerReceiver(BroadcastReceiver receiver, IntentFilter filter)
+    -AppInfo transferToAppInfo(ResolveInfo resolveInfo)
+}
+class LollipopAllAppsFactory{
+    -void registerCallback(AppStateCallback callback)
+    -AppInfo transferToAppInfo(LauncherActivityInfo launcherActivityInfo)
+}
+class AppInfo{}
+AllAppsFactory ..|> AllAppsInterface
+AllAppsPresenter --> AllAppsFactory
+AllAppsPresenter --> AppInfo
+AllAppsPresenter ..> AppStateListener
+IceCreamAllAppsFactory --|> AllAppsFactory
+LollipopAllAppsFactory--|> AllAppsFactory
+AllAppsFactory ..> AppInfo
+AllAppsFactory ..> AppStateListener
 
 @enduml

@@ -1,5 +1,8 @@
 package linked_list;
 
+import utils.LinkedListHelper;
+import utils.ListNode;
+
 public class LC21MergeTwoSortedLists {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode root = null, pre = null, node = null;
@@ -85,7 +88,7 @@ public class LC21MergeTwoSortedLists {
 
     public static void main(String[] args) {
         LC21MergeTwoSortedLists test = new LC21MergeTwoSortedLists();
-        ListHelper helper = new ListHelper();
+        LinkedListHelper helper = new LinkedListHelper();
         String result;
 
         result = helper.toString(test.mergeTwoLists2(helper.toList("[1,2,4]"), helper.toList("[1,3,4]")));

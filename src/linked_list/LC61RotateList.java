@@ -1,5 +1,8 @@
 package linked_list;
 
+import utils.LinkedListHelper;
+import utils.ListNode;
+
 public class LC61RotateList {
     public ListNode rotateRight(ListNode head, int k) {
         if (head == null || k == 0) {
@@ -36,7 +39,7 @@ public class LC61RotateList {
 
     public static void main(String[] args) {
         LC61RotateList test = new LC61RotateList();
-        ListHelper helper = new ListHelper();
+        LinkedListHelper helper = new LinkedListHelper();
         String result;
 
 //        result = helper.toString(test.rotateRight(helper.toList("[1,2,3,4,5]"), 2));

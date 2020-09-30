@@ -1,5 +1,8 @@
 package linked_list;
 
+import utils.LinkedListHelper;
+import utils.ListNode;
+
 public class LC23MergeKSortedLists {
     private boolean isFirst;
     private ListNode root, pre;
@@ -61,7 +64,7 @@ public class LC23MergeKSortedLists {
 
     public static void main(String[] args) {
         LC23MergeKSortedLists test = new LC23MergeKSortedLists();
-        ListHelper helper = new ListHelper();
+        LinkedListHelper helper = new LinkedListHelper();
         String result;
 
         result = helper.toString(test.mergeKLists2(new ListNode[]{

@@ -73,7 +73,7 @@ interface AppStateListener {
     void onRemoved(String packageName)
     void onChanged(String packageName)
 }
-class AllAppsFactory{
+abstract class AllAppsFactory{
     #AppStateListener listener
 }
 class IceCreamAllAppsFactory {
@@ -85,13 +85,13 @@ class LollipopAllAppsFactory{
     -AppInfo transferToAppInfo(LauncherActivityInfo launcherActivityInfo)
 }
 class AppInfo{}
-AllAppsFactory ..|> AllAppsInterface
-AllAppsPresenter --> AllAppsFactory
-AllAppsPresenter --> AppInfo
-AllAppsPresenter ..> AppStateListener
-IceCreamAllAppsFactory --|> AllAppsFactory
-LollipopAllAppsFactory--|> AllAppsFactory
-AllAppsFactory ..> AppInfo
-AllAppsFactory ..> AppStateListener
+AllAppsFactory .right.|> AllAppsInterface
+AllAppsPresenter -down-> AllAppsFactory
+AllAppsPresenter -right-> AppInfo
+AllAppsPresenter .down.> AppStateListener
+IceCreamAllAppsFactory -up-|> AllAppsFactory
+LollipopAllAppsFactory -up-|> AllAppsFactory
+AllAppsFactory .left.> AppInfo
+AllAppsFactory .left.> AppStateListener
 
 @enduml

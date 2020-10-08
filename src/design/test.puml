@@ -1,5 +1,5 @@
 @startuml
-Class01 <|-- Class02 : inherit
+Class01 <|-down- Class02 : inherit
 Class03 *-- Class04 : composition
 Class05 o-- Class06 : aggregation
 Class07 --> Class08 : relation

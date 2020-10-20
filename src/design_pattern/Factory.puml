@@ -1,0 +1,72 @@
+@startuml
+
+/' -----------------------------------------------------
+优点：
+    封装性好；
+    屏蔽产品类，只关心产品接口（比如数据库MySQL, ORACLE）；
+    抽象工厂屏蔽产品族内的约束(比如ProductA:ProductB=1:2);
+    抽象工厂屏蔽不同操作系统；
+    方便添加产品类（比如人种）。
+
+缺点：
+    抽象工厂不方便扩展产品族（比如ProductC）
+
+简单工厂模式：
+    有唯一的工厂类，工厂类的创建方法根据传入的参数做if-else条件判断，决定最终创建什么样的产品对象。
+工厂方法模式：
+    由多个工厂类实现工厂接口，利用多态来创建不同的产品对象，从而避免了冗长的if-else条件判断。
+抽象工厂模式：
+    把产品子类进行分组，同组中不同产品由同一个工厂子类的不同方法负责创建，从而减少了工厂子类的数量。
+
+-------------------------------------------------------- '/
+
+/' --- 工厂方法模式 --- '/
+package com.design_pattern.factory.creator #e5ffe5 {
+    class Creator
+    class ConcreteCreatorA
+    class ConcreteCreatorB
+}
+package com.design_pattern.factory.product #ffebe5 {
+    class Product
+    class ConcreteProductA
+    class ConcreteProductB
+}
+class Creator {
+    +Product createProduct()
+}
+class ConcreteCreatorA {
+    +ConcreteProductA createProduct()
+}
+class ConcreteCreatorB {
+    +ConcreteProductB createProduct()
+}
+Creator <|-- ConcreteCreatorA
+Creator <|-- ConcreteCreatorB
+
+class Product{}
+class ConcreteProductA{}
+class ConcreteProductB{}
+
+Product <|-- ConcreteProductA
+Product <|-- ConcreteProductB
+
+ConcreteProductA <.. ConcreteCreatorA
+ConcreteProductB <.. ConcreteCreatorB
+
+/' --- 抽象工厂模式 --- '/
+class Client {}
+class AbstractFactory {
+    +AbstractProduct createProduct()
+}
+class ConcreteFactory {
+    +ConcreteProduct createProduct()
+}
+ConcreteFactory -up-|> AbstractFactory
+class AbstractProduct {}
+class ConcreteProduct {}
+ConcreteProduct -up-|> AbstractProduct
+ConcreteFactory .left.> ConcreteProduct
+Client -down-> AbstractFactory
+Client -down-> AbstractProduct
+
+@enduml

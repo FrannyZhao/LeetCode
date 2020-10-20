@@ -1,0 +1,59 @@
+@startuml
+
+/' -----------------------------------------------------
+优点：
+    减少内存开销；
+    避免对资源的重复占用；
+    设置全局的访问点，优化和共享资源访问。
+
+缺点：
+    不便于继承或通过接口扩展；
+    对测试不利，无法mock对象。
+
+-------------------------------------------------------- '/
+
+class Client{}
+note top of Client : Singleton.getInstance()
+/' 不推荐：在程序启动时就会创建对象，非常耗内存 '/
+class SingletonHungry {
+    {static}- Singleton sInstance = new Singleton();
+    -Singleton()
+    {static}+ Singleton getInstance() {return sInstance;}
+}
+note top of SingletonHungry : not recommend
+
+/' 推荐1：
+    使用类的静态内部类实现的单例模式，既保证了线程安全，又保证了懒加载，也没有加锁的性能消耗；
+    因为JVM可以保证多线程并发访问的正确性，也就是一个类的构造方法在多线程环境下可以被正确加载。
+ '/
+class SingletonLazy1 {
+    {static}- class SingletonHolder {private static SingletonLazy1 instance = new SingletonLazy1();}
+    - SingletonLazy1()
+    {static}+ SingletonLazy1 getInstance() {return SingletonHolder.instance;}
+}
+
+/' 推荐2：
+    避免了静态方法加锁，静态方法加锁是类锁，所有对这个类的访问都会被阻塞；动态方法或者代码块加锁是对象锁，只有对当前对象访问才会被阻塞；
+    volatile会强制保证线程可见性，虽然JVM会尽力保证可见性，但CPU一直繁忙的时候就不能保证了。
+'/
+class SingletonLazy2 {
+    {static}- volatile SingletonLazy2 sInstance
+    -SingletonLazy2()
+    {static}+ SingletonLazy2 getInstance() {\n  if (null == sInstance) {\n    synchronized (SingletonLazy2.class) {\n      if (null == sInstance) {\n        sInstance = new SingletonLazy2();\n      }\n    }\n  }\n  return sInstance;\n}
+}
+
+/' 推荐3：(Effective Java作者推荐)
+    枚举单例，线程安全，自由串行化。
+'/
+enum SingletonEnum {
+    INSTANCE;
+    + function()
+}
+note top of SingletonEnum : SingletonEnum.INSTANCE.function();
+
+Client --> SingletonHungry
+Client --> SingletonLazy1
+Client --> SingletonLazy2
+Client --> SingletonEnum
+
+@enduml

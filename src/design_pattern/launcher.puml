@@ -1,0 +1,39 @@
+@startuml
+
+class AllAppsPresenter <<Client>> {
+    -AllAppsFactory factory
+    -List<AppInfo> appInfoData
+    -AppStateListener listener
+}
+interface AllAppsInterface{
+    void register()
+    void unregister()
+    List<AppInfo> getAllApps()
+    AppInfo getAppInfoByPackageName(String packageName)
+}
+interface AppStateListener {
+    void onAdded(String packageName)
+    void onRemoved(String packageName)
+    void onChanged(String packageName)
+}
+abstract class AllAppsFactory{
+    #AppStateListener listener
+}
+class IceCreamAllAppsFactory {
+    -void registerReceiver(BroadcastReceiver receiver, IntentFilter filter)
+    -AppInfo transferToAppInfo(ResolveInfo resolveInfo)
+}
+class LollipopAllAppsFactory{
+    -void registerCallback(AppStateCallback callback)
+    -AppInfo transferToAppInfo(LauncherActivityInfo launcherActivityInfo)
+}
+class AppInfo{}
+AllAppsFactory .right.|> AllAppsInterface
+AllAppsPresenter -down-> AllAppsFactory
+AllAppsPresenter -right-> AppInfo
+AllAppsPresenter .down.> AppStateListener
+IceCreamAllAppsFactory -up-|> AllAppsFactory
+LollipopAllAppsFactory -up-|> AllAppsFactory
+AllAppsFactory .left.> AppInfo
+AllAppsFactory .left.> AppStateListener
+@enduml

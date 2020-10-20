@@ -1,4 +1,13 @@
 @startuml
+
+/' -----------------------------------------------------
+优点：
+
+
+缺点：
+
+-------------------------------------------------------- '/
+
 Class01 <|-down- Class02 : inherit
 Class03 *-- Class04 : composition
 Class05 o-- Class06 : aggregation
